@@ -50,6 +50,9 @@ this repository documents my journey in low-latency systems engineering. the foc
   * `thread-pool-pattern/`: constructs a multi-worker thread pool utilizing the custom thread-safe queue, implementing the poison pill technique for graceful shutdown and benchmarking concurrent throughput.
   * `getdents-thread-pool/`: integrates raw linux filesystem syscalls (sys_getdents64) with a concurrent thread pool, using a producer thread to rapidly traverse directories and multiple consumer threads to process inodes concurrently via a thread-safe queue.
   * `mmap-ipc-signal/`: demonstrates inter-thread communication and synchronization using shared memory mapping (mmap). a producer thread modifies the mapped file and forces hardware sync (msync), utilizing standard condition variables to safely signal a waiting consumer thread to read the updated memory.
+  * `sync-overhead-bench/`: benchmarks the extreme latency penalty introduced by mutex locks during high-frequency variable increments compared to an unsynchronized data race.
+  * `hardware-reordering/`: demonstrates cpu out-of-order execution by showing how hardware can reorder independent loads and stores, even when using an asm volatile compiler barrier, leading to unexpected memory states.
+  * `sequential-consistency/`: solves the hardware reordering problem by utilizing std::atomic with memory_order_seq_cst, enforcing strict global memory ordering and preventing cpu instruction reordering.
 
 * **`memory/`** — focus: memory allocation, heap management, raw pointers, and execution faults.
   * `custom-malloc/`: implements a minimal userspace heap allocator using sbrk() to request memory from the kernel, tracking blocks with a linked list of headers for first-fit recycling.
