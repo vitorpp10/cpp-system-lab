@@ -53,6 +53,8 @@ this repository documents my journey in low-latency systems engineering. the foc
   * `sync-overhead-bench/`: benchmarks the extreme latency penalty introduced by mutex locks during high-frequency variable increments compared to an unsynchronized data race.
   * `hardware-reordering/`: demonstrates cpu out-of-order execution by showing how hardware can reorder independent loads and stores, even when using an asm volatile compiler barrier, leading to unexpected memory states.
   * `sequential-consistency/`: solves the hardware reordering problem by utilizing std::atomic with memory_order_seq_cst, enforcing strict global memory ordering and preventing cpu instruction reordering.
+  * `acquire-release-semantics/`: demonstrates lock-free thread synchronization by establishing a happens-before relationship using std::atomic with memory_order_acquire and memory_order_release, allowing safe reading of non-atomic variables across threads without a mutex.
+  * `false-sharing-bench/`: benchmarks the throughput penalty of cpu cache line bouncing (false sharing) when threads modify independent variables packed tightly together, and demonstrates the fix using alignas(hardware_destructive_interference_size) to force variables into separate cache lines.
 
 * **`memory/`** — focus: memory allocation, heap management, raw pointers, and execution faults.
   * `custom-malloc/`: implements a minimal userspace heap allocator using sbrk() to request memory from the kernel, tracking blocks with a linked list of headers for first-fit recycling.
